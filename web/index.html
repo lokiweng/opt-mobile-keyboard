@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f3">
+  <title>Keyform · Keyboard playground</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='9' fill='%23cbef87'/%3E%3Cpath d='M9 13h5m3 0h5m3 0h2M9 18h5m3 0h5m3 0h2M12 23h12' stroke='%23223226' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="app.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M6 9h1m3 0h1m3 0h1m3 0h.1M6 12h1m3 0h1m3 0h1m3 0h.1M8 15h8"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 .7 6M3 4v6h6m3-3v5l3 2"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M3 7h8m4 0h6M3 17h3m4 0h11"/><circle cx="13" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m13 3 1.9 5.9L21 11l-6.1 2.1L13 19l-2.1-5.9L5 11l5.9-2.1L13 3Z"/><path d="m4.5 15 .7 2.3 2.3.7-2.3.7L4.5 21l-.7-2.3-2.3-.7 2.3-.7.7-2.3Z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-13h-8l1-7Z"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3m6-3v3m4 4h3m-3 6h3M9 19v3m6-3v3M2 9h3m-3 6h3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20v-2a7 7 0 0 1 14 0v2"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-6 4V7a2 2 0 0 1 1-2Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+  </svg>
+  <header class="site-header">
+    <div class="shell bar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Keyform</div>
+      <nav class="nav-tabs" role="tablist" aria-label="Workspace">
+        <button type="button" role="tab" id="tab-compose" aria-selected="true" aria-controls="view-compose"><svg class="icon"><use href="#i-keyboard"/></svg>Playground</button>
+        <button type="button" role="tab" id="tab-history" aria-selected="false" aria-controls="view-history"><svg class="icon"><use href="#i-history"/></svg>History</button>
+      </nav>
+      <button type="button" class="settings-trigger" id="open-settings" aria-haspopup="dialog"><svg class="icon"><use href="#i-settings"/></svg><span>Engine settings</span></button>
+    </div>
+  </header>
+  <main class="shell">
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>Keyboard <em>playground</em></h1>
+        <p>Write a message and explore what your keyboard predicts next.</p>
+      </div>
+      <div class="key-art" aria-hidden="true"><div class="key-cluster">
+        <div class="cap cap-ash"><span>⌘</span></div>
+        <div class="cap cap-green"><span>K</span></div>
+        <div class="cap cap-ivory"><span>↵</span></div>
+      </div></div>
+    </div>
+    <div class="workspace">
+      <div class="main-column">
+        <section id="view-compose" class="panel composer" role="tabpanel" aria-labelledby="tab-compose">
+          <div class="panel-head">
+            <h2>Composer</h2>
+            <div class="segmented" role="group" aria-label="Typing mode">
+              <button type="button" id="mode-solo" aria-pressed="true"><svg class="icon"><use href="#i-user"/></svg>Solo</button>
+              <button type="button" id="mode-chat" aria-pressed="false"><svg class="icon"><use href="#i-chat"/></svg>Two-person chat</button>
+            </div>
+          </div>
+          <div id="chat-controls" hidden>
+            <label>Typing as <select id="speaker"><option>User A</option><option>User B</option></select></label>
+            <label><input type="checkbox" id="auto-switch" checked>Auto-switch turns</label>
+            <button class="text-button" type="button" id="reset-chat">Reset chat</button>
+          </div>
+          <div id="chat-recent" aria-label="Recent conversation" hidden></div>
+          <div class="draft-block">
+            <label class="field-label" for="draft">Your message</label>
+            <div class="draft-box">
+              <div class="draft-entry">
+                <input id="draft" type="text" maxlength="2048" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="Start typing here…" aria-label="Your message" aria-describedby="preview-hint">
+                <div id="draft-preview" aria-hidden="true" hidden><span id="preview-prefix"></span><span id="preview-tail"></span></div>
+              </div>
+              <button id="send" type="button" title="Send message" aria-label="Send message"><svg class="icon"><use href="#i-send"/></svg></button>
+            </div>
+            <div class="send-line"><span id="send-status" role="status"></span></div>
+            <div class="preview-help"><small id="preview-hint" hidden>Press → or tap the first suggestion to accept.</small></div>
+            <div id="autocorrect-note" hidden><span id="autocorrect-message" role="status"></span> <button id="undo-autocorrect" type="button" class="text-button">Undo</button></div>
+          </div>
+          <div id="corrections" aria-live="polite"></div>
+          <div class="predict-head"><span class="field-label"><svg class="icon"><use href="#i-spark"/></svg>Suggestions</span><span id="prediction-mode">Starter</span></div>
+          <div id="suggestions" aria-label="Word and punctuation suggestions"></div>
+          <div id="keyboard" aria-label="On-screen keyboard" role="group"></div>
+        </section>
+        <section class="panel history-panel" id="view-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+          <div class="panel-head"><h2>Message history</h2><span id="history-count">0 messages</span></div>
+          <div id="history-empty"><svg class="icon"><use href="#i-chat"/></svg><h3>No messages yet</h3><p>Send a message from the composer to see it here.</p></div>
+          <div id="history" role="log" aria-label="Sent messages"></div>
+        </section>
+      </div>
+      <aside class="side-column" aria-label="Playground tools">
+        <section class="panel prompt-panel">
+          <div class="aside-title"><span class="icon-tile prompt-icon"><svg class="icon"><use href="#i-bolt"/></svg></span><h2>Try a prompt</h2></div>
+          <p id="prompt-intro">Choose a starting point for your message.</p>
+          <div id="prompts"></div>
+        </section>
+        <section class="engine-panel" aria-labelledby="engine-heading">
+          <div class="aside-title"><span class="icon-tile"><svg class="icon"><use href="#i-cpu"/></svg></span><h2 id="engine-heading">Prediction engine</h2></div>
+          <div class="engine-name">OPT-125M</div>
+          <div class="engine-status-line"><span id="engine-status" role="status">Connecting…</span></div>
+          <dl class="engine-metrics"><div><dt>Latency</dt><dd id="latency">—</dd></div><div><dt>Profile</dt><dd id="profile-label">Solo</dd></div></dl>
+        </section>
+      </aside>
+    </div>
+    <footer><span>Keyform <b> / </b> Keyboard lab</span><span>BMDS2123 · Natural Language Processing</span></footer>
+  </main>
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <div class="dialog-head"><h2 id="settings-title">Engine settings</h2><button type="button" id="close-settings" aria-label="Close settings"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <div class="settings-fields">
+      <label class="setting" for="variant"><span>Model variant</span><select id="variant"><option value="lora_int8">LoRA fine-tuned · INT8</option><option value="lora_fp32">LoRA fine-tuned · FP32</option><option value="base">Base OPT-125M · FP32</option></select></label>
+      <div class="footprint">Model footprint <span id="footprint">—</span></div>
+      <label class="setting" for="boost"><span>Personalization boost <output id="boost-value" for="boost">0.35</output></span><input id="boost" type="range" min="0" max="1" step="0.05" value="0.35"><small>Give words you use often a higher rank.</small></label>
+      <label class="switch-line"><span>Spelling suggestions</span><input id="spelling" type="checkbox" checked></label>
+      <label class="switch-line"><span>Autocorrect common typos</span><input id="autocorrect" type="checkbox" checked></label>
+      <div class="vocab-head"><h3>Adaptive vocabulary</h3><button id="reset-cache" class="text-button" type="button">Reset cache</button></div>
+      <ul id="vocabulary" aria-label="Active profile’s learned words"></ul>
+    </div>
+  </dialog>
+</body>
+</html>
